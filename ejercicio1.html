@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1 class="h1 text-center">Pizzería CC5002</h1>
+    <div class="container">
+        <h3 class="h3 text"> Pida su pizza aquí</h3>
+    
+        <form id="formulario" action="" method="POST" onsubmit="return validacion()">
+    
+            <div class="row">
+                    <div class="form-check">
+                        <label>Nombre</label>
+                        <input size="5" maxlength="100" type="text" class="form-control" id="inputNombre">
+                    </div>
+                    
+                    <div class="form-check">
+                        <label>Tipo de pizza</label>
+                        <select name="tipo_pizza" id="inputPizza" class="form-select">
+                            <option value="hawaiana">Hawaiana</option>
+                            <option value="italiana">Italiana</option>
+                            <option value="Napolitana">Napolitana</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-check">
+                        <label for="inputEmail4">Comentarios</label>
+                        <textarea class="form-control" aria-label="With textarea" maxlength="1000" rows="4" cols="30" id="inputComentarios" ></textarea>
+                    </div>
+            
+                    <div class="form-check">
+                        <label for="inputEmail4">Telefono</label> 
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">+</span>
+                            <input id="inputPhone" name="phone" type="text" class="form-control">
+                        </div>
+                    </div class="form-check">
+            
+                    <div class="form-check">
+                        <label>Dirección</label>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+            
+                    <div>
+                        <button type="submit" class="btn btn-primary mandarForm">Pedir</button>
+                    </div>
+                    
+                </form>
+            </div>
+            
+            <div>
+                Contenedor de errores
+            </div>
+            
+    </div>
+
+
+    <script src="/web/Untitled-1.js"></script>
+        <script>
+
+        </script>
+
+</body>
+</html>
