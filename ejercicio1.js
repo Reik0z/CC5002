@@ -1,4 +1,9 @@
 // Ejercicio 1
+
+/*
+direccion sola envia
+caja de telefono
+*/
 function validacion(){
 
     let validacion = true;
