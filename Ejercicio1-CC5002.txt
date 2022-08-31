@@ -1,0 +1,35 @@
+Parte Teorica:
+-Es importante tener una doble validación ya que nos permite que
+no se pueda inyectar código HTML a nuestra página. Además nos permite
+mejorar la experiencia del usuario, en caso de que este haya cometido
+algún error al completar nuestros formularios, podemos de manera
+instantanea notificar de su error.
+
+-seguridad?
+
+-Las librerias más populares de JavaScript:
+	- jQuery: Libreria utilizada como ina interfaz de DOM, la cual
+		ofrece muchas funciones, una muy popular es la posibilidad
+		de integrar las consultas realizadas con Ajax (solicitudes
+		HTTP que no requieren volver a cargar la página web).
+
+	- Dojo Toolkit: Libreria diseñada para realizar aplicaiones web
+		y contenidos web dinamicos. Permite incorporar al usuario
+		elementos con ayuda de widgets predefinidos.
+
+	- React: Libreria para crear interfaces de usuario, no solo se
+		puede utilizar en páginas web, sino también en servidor o
+		en el desarrollo de aplicaciones web. Destaca por el flujo
+		de datos en una dirección.
+
+	- Zepto: Libreria muy liviana, semejante a jQuery, minimalista,
+		ocupa menos espacio que jQuery, se puede integrar en
+		aplicaciones móviles, sin embargo no presenta tantas
+		funcionalidades como jQuery.
+
+	- CreateJS: No es solo una biblioteca sino varias, es una suite
+		compuesta por 4 bibliotecas diferentes: EaselJS (gráficos),
+		TweenJS (animaciones), SoundJS (sonido) y PreloadJS
+		(preloading). Además ofrece herramientas para simplificar
+		el trabajo con librerías de JavaScript. Enfocada en HTML5 y
+		Flash. Integra algunas funcionalidades de Adobe.
