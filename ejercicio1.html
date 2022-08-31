@@ -16,20 +16,21 @@
     <div class="container">
         <h3 class="h3 text"> Pida su pizza aquí</h3>
     
-        <form id="formulario" action="" method="POST" onsubmit="return validacion()">
+        <form id="formulario" action="" method="post" onsubmit="return validacion()">
     
             <div class="row">
                     <div class="form-check">
-                        <label>Nombre</label>
+                        <label for="inputEmail4">Nombre</label>
                         <input size="5" maxlength="100" type="text" class="form-control" id="inputNombre">
                     </div>
                     
                     <div class="form-check">
                         <label>Tipo de pizza</label>
                         <select name="tipo_pizza" id="inputPizza" class="form-select">
-                            <option value="hawaiana">Hawaiana</option>
-                            <option value="italiana">Italiana</option>
-                            <option value="Napolitana">Napolitana</option>
+                            <option selected id="defaultvalue"> Elija...</option>
+                            <option>Hawaiana</option>
+                            <option>Italiana</option>
+                            <option>Napolitana</option>
                         </select>
                     </div>
             
@@ -44,28 +45,25 @@
                             <span class="input-group-text">+</span>
                             <input id="inputPhone" name="phone" type="text" class="form-control">
                         </div>
-                    </div class="form-check">
+                    </div>
             
                     <div class="form-check">
                         <label>Dirección</label>
-                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="inputDireccion">
                     </div>
             
                     <div>
                         <button type="submit" class="btn btn-primary mandarForm">Pedir</button>
                     </div>
-                    
-                </form>
             </div>
-            
-            <div>
-                Contenedor de errores
-            </div>
-            
+        </form>
+            <div id="contenedorErrores" class="contenedor">
+                
+            </div>   
     </div>
 
 
-    <script src="/web/Untitled-1.js"></script>
+    <script src="ejercicio1.js"></script>
         <script>
 
         </script>

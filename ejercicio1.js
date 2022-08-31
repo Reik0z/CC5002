@@ -7,11 +7,11 @@ function validacion(){
     let caja_errores = document.getElementById('contenedorErrores');
 
     let nombre = $('#inputNombre');
-    let comentarios = $('#inputComentario');
+    let comentarios = $('#inputComentarios');
     let direccion = $('#inputDireccion');
     // let pizza = document.getElementById('inputPizza')
 
-    let telephone = document.getElementById('phone');
+    let telephone = document.getElementById('inputPhone');
     let regex_phone = /^\+\d{11}$/;
 
     // LARGO DE COSAS
@@ -34,6 +34,9 @@ function validacion(){
         errores += '<p> Comentario excede el límite de 1000 caracteres. </p>'
         validacion = false;
         document.getElementById('inputComentarios').style.borderColor = "red"
+    } else{
+        validacion = true;
+        document.getElementById('inputComentarios').style.borderColor = "#ced4da"
     }
 
     if (direccion.val().length < 5){
@@ -52,23 +55,23 @@ function validacion(){
     }
 
     // ERROR EN TELEFONO
-    if (!regex_phone.test(phone.value)){
+    if (!regex_phone.test(telephone.value)){
         errores += '<p> Telefono incorrecto. </p>'
         validacion = false;
-        document.getElementById('phone').style.borderBlockColor = "red"
+        document.getElementById('inputPhone').style.borderBlockColor = "red"
     }
 
     // CAMPOS OBLIGATORIOS
-    if (!nombre){
+    if (!nombre.val()){
         errores += '<p> Tiene que ingresar su nombre </p>'
         validacion = false; 
         document.getElementById('inputNombre').style.borderColor = "red"
     }
 
-    if (!telephone){ // NOSE?
+    if (!telephone.value){ // NOSE?
         errores += '<p> Tiene que ingresar su teléfono. </p>'
         validacion = false; 
-        document.getElementById('phone').style.borderColor = "red"
+        document.getElementById('inputPhone').style.borderColor = "red"
     }
 
     if (!direccion){
