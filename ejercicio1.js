@@ -2,7 +2,6 @@
 
 /*
 direccion sola envia
-caja de telefono
 */
 function validacion(){
 
@@ -42,7 +41,7 @@ function validacion(){
         document.getElementById('inputPhone').style.borderColor = "red"
     }
 
-    if (!direccion){
+    if (direccion.val().length == 0){
         errores += '<p> Tiene que ingresar su dirección. </p>'
         validacion = false; 
         document.getElementById('inputDireccion').style.borderColor = "red"
@@ -96,8 +95,6 @@ function validacion(){
         validacion = false;
         document.getElementById('inputDireccion').style.borderColor = "red"
     }
-
-
 
     caja_errores.innerHTML = errores;
     return validacion
