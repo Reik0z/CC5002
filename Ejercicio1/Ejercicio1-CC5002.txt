@@ -5,7 +5,10 @@ mejorar la experiencia del usuario, en caso de que este haya cometido
 algún error al completar nuestros formularios, podemos de manera
 instantanea notificar de su error.
 
--seguridad?
+- Es seguro, sin embargo, lo mejor es complementarlo con más capas de 
+seguridad, como lo es tener otro verificador o validador en la entrada 
+del servidor, el cual será otra puerta que tendrán que superar para poder
+vulnerar nuestra web.
 
 -Las librerias más populares de JavaScript:
 	- jQuery: Libreria utilizada como ina interfaz de DOM, la cual

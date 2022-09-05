@@ -1,8 +1,5 @@
 // Ejercicio 1
 
-/*
-direccion sola envia
-*/
 function validacion(){
 
     let validacion = true;
