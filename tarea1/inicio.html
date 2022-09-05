@@ -1,80 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tarea 1</title>
 
-    <!-- CSS bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap.min.css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
-    <!-- JS bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
     
-</head>
-<body>
+    <!-- Custom styles for this template -->
+    <link href="features.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<main>
+  <div class="b-example-divider"></div>
 
-  
-  <section class="jumbotron text-center">
-    <div class="container">
-      <h1 class="jumbotron-heading">Pizzería Bootstrap CC5002</h1>
-      <p class="lead text-muted">Con bootstrap es mucho más sencillo. Sacando provecho a las clases que nos provee.</p>
-      <p>
-    </div>
-  </section>
+  <div class="container px-4 py-5" id="custom-cards">
+    <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
 
-    <div class="container">
-
-      <div class="row">
-        <p class="text-muted"> Rellene sus datos con su pizza favorita.</p>
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('img/foto1.jpg');"
+        onclick="location.href='aviaje.html'">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Agregar Viaje</h2>
+          </div>
+        </div>
       </div>
-      <form>
-        <div class="form-group">
-          <label for="nombreUsuario">Ingrese su nombre:</label>
-          <input type="text" class="form-control" id="nombreUsuario" placeholder="Juanito">
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Escoja su pizza favorita:</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Elija ...</option>
-            <option>Italiana</option>
-            <option>Napolitana</option>
-            <option>Hawaiana</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="comentarios">Escriba algún comentario de la pizza:</label>
-          <textarea class="form-control" id="comentarios" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
 
-      <br>
-            <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Tipo pizza</th>
-                    <th scope="col">Comentario</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Juanito</td>
-                    <td>Napolitana</td>
-                    <td>Muy rica</td>
-                  </tr>
-                  <tr>
-                    <td>Pedro</td>
-                    <td>Hawaiana</td>
-                    <td>Muy mala</td>
-                  </tr>
-                </tbody>
-              </table>
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('img/foto2.jpg');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Agregar Encargo</h2>
+          </div>
+        </div>
+      </div>
 
-    </div> 
-</body>
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('img/foto3.jpg');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Ver Viajes</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg" style="background-image: url('img/foto4.jpg');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Ver Encargos</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+      
+  </body>
 </html>
