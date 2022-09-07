@@ -50,7 +50,7 @@ function validacion(){
         ciudad_destino.style.borderColor = "red"
     }
     
-    // if (!files){ FOTOS
+    // if (files.length == 0 || files.length > 3){
     //     valor = false;
     //     files.style.borderColor = "red"
     // }
