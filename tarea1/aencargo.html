@@ -192,7 +192,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-10">
+                <div class="col-md-10" id="cajaFiles">
                   <label for="formFileMultiple" class="form-label"
                     >Adjuntar fotos</label
                   >
@@ -200,10 +200,12 @@
                     class="form-control"
                     type="file"
                     id="formFileMultiple"
-                    name="foto-encargo"
-                    multiple
+                    name="foto-encargo-0"
                   />
                 </div>
+                <div class="col-md-10">
+                  <button class="btn btn-outline-primary btn-sm" type="button" id="addfiles_butt">Agregar más</button>
+                </div>  
 
                 <div class="col-10">
                   <label for="email" class="form-label">Email</label>
@@ -246,6 +248,21 @@
       </footer>
     </div>
 
+    <script>
+      let numero = 1;
+      let boton = document.getElementById('addfiles_butt');
+      let input0 = document.getElementById('formFileMultiple');
+      const imp = '<input class="form-control" type="file" id="formFileMultiple" name="foto-encargos"';
+      boton.addEventListener('click', function(){
+            if (numero <= 3){
+              input0.innertHTML('afterend', imp);
+              numero++;
+            }
+            else{
+              alert("NO SE PUEDEN MÁS");
+            }
+      })
+    </script>
     <script src="addpais.js"></script>
     <script src="form-validation-aencargo.js"></script>
   </body>

@@ -11,7 +11,7 @@ function validacion(){
     let pais_destino = document.getElementById('paisdestino')
     let ciudad_destino = document.getElementById('ciudaddestino')
 
-    // let files = document.getElementById('formFileMultiple')
+    let files = document.getElementById('formFileMultiple')
 
     let email = document.getElementById('email')
     let telefono = document.getElementById('celular')
@@ -50,10 +50,10 @@ function validacion(){
         ciudad_destino.style.borderColor = "red"
     }
     
-    // if (files.length == 0 || files.length > 3){
-    //     valor = false;
-    //     files.style.borderColor = "red"
-    // }
+    if (files.value.length == 0 || files.value.length > 3){
+        valor = false;
+        files.style.borderColor = "red"
+    }
 
     if (!email.value){
         valor = false;
