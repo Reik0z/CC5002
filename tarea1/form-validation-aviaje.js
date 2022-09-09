@@ -81,11 +81,15 @@ function validacion(){
     }
 
     // fechas distintas REVISAR
-    // if (fecha_ida.value <= fecha_regreso.value){
-    //     valor = false;
-    //     fecha_ida.style.borderColor = "red"
-    //     fecha_regreso.style.borderColor = "red"
-    // }
+    fecha_ida.style.borderColor = "#ced4da"
+    fecha_regreso.style.borderColor = "#ced4da"
+    const fecha1 = new Date(fecha_ida.value);
+    const fecha2 = new Date(fecha_regreso.value);
+    if (fecha1.valueOf() >= fecha2.valueOf()){
+        valor = false;
+        fecha_ida.style.borderColor = "red"
+        fecha_regreso.style.borderColor = "red"
+    }
 
     return valor
 }
