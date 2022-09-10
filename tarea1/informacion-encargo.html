@@ -316,10 +316,18 @@
       </main>
 
       <script>
+        var grande = false;
         function resizeimagen(imagen){
           let foto = document.getElementById(imagen);
-          foto.width = "1280";
-          foto.height = "1024";
+          if (grande){
+            foto.width = "640";
+            foto.height = "480";
+            grande = false;
+          } else{
+            foto.width = "1280";
+            foto.height = "1024";
+            grande = true;
+          }
         }
       </script>
 
