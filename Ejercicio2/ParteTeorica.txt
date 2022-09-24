@@ -1,0 +1,22 @@
+1) ¿Qué es la CGI?
+La cgi es una interfaz de los servidores web, la cual permite intercambiar datos 
+entre los servidores y las aplicaciones externas, de una manera estandarizada y
+a tiempo real.
+
+Este permite no tener todo el contenido del HTML este disponible en el servidor,
+ya con el CGI se genera de forma dinámica.
+
+2) ¿Qué son los lenguajes de servidor?
+Los lenguajes de servidor son un lenguaje de programación que corre en el lado del
+servidor, esto hace que el servidor también valide y procese la petición para así
+dar una respuesta a lo solicitado.
+También llamado "back-end" es lo que ocurre del otro lado de nuestra página web.
+
+3) ¿Cuál es la diferencia entre usar lenguajes por el lado del servidor vs el lado
+del cliente?
+Una de las principales diferencias es que la validación o uso de lenguejes por el
+lado del cliente es mucho más rapida y liviana ya que no pone más carga al servidor
+que lo que ya esta cargado. Por otro lado el uso de lenguajes por parte del servidor
+permite el tener grandes cantidades de datos que se mostrarán o serán utilizados en
+la página, lo cual sería un problema al estar del lado del cliente ya que tendríamos
+que cargar toda la información de su lado.

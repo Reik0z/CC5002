@@ -29,14 +29,14 @@
       <div class="row">
         <p class="text-muted"> Rellene sus datos con su pizza favorita.</p>
       </div>
-      <form action="">
+      <form action="cgi-bin/validacion.py" method="POST">
         <div class="form-group">
           <label for="nombreUsuario">Ingrese su nombre:</label>
           <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Juanito">
         </div>
         <div class="form-group">
           <label for="exampleFormControlSelect1">Escoja su pizza favorita:</label>
-          <select class="form-control" id="exampleFormControlSelect1" name="exampleFormControlSelect1">
+          <select class="form-control" id="exampleFormControlSelect1" name="pizzafavorita">
             <option selected>Elija ...</option>
             <option>Italiana</option>
             <option>Napolitana</option>
