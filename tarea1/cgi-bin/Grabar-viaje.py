@@ -67,13 +67,13 @@ if 'email' not in form:
     errores.append('<p> Error, ingrese un email valido </p>')
 else:
     correo = form.getvalue('email')
-    if re.search(r"^([A-Z,a-z,0-9_\-\.])+\@([A-Z,a-z,0-9_\-\.])+\.([A-Z,a-z]{2,4})$/", correo):
+    if re.match(r"^([A-Z,a-z,0-9_\-\.])+\@([A-Z,a-z,0-9_\-\.])+\.([A-Z,a-z]{2,4})$/", correo):
         valido = False
         erroes.append('<p>Error, formato del email.</p>')
 
 if 'celular' in form:
     telefono = form.getvalue('celular')
-    if re.search(r"^\+\d{11}$/", telefono):
+    if re.match(r"^\+\d{11}$/", telefono):
         valido = False
         errores.append('<p>Error, formato del numero de telefono.</p>')
 
@@ -83,7 +83,7 @@ if 'fecha-ida' not in form:
     errores.append('<p> Error, seleccione una fecha de ida valida <p>')
 else:
     fechaIda = form.getvalue('fecha-ida')
-    if re.search(r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$", fechaIda) == None:
+    if re.match(r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$", fechaIda):
         valido = False
         errores.append('<p>Error, formato de fecha1 no valido.</p>')
 
@@ -92,16 +92,14 @@ if 'fecha-regreso' not in form:
     errores.append('<p> Error, seleccione una fecha de regreso valida </p>')
 else:
     fechaRegreso = form.getvalue('fecha-regreso')
-    if re.search(r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$", fechaRegreso) == None:
+    if re.match(r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$", fechaRegreso):
         valido = False
         errores.append('<p>Error, formato de fecha2 no valido.</p>')
 
 if valido:
-    # f1 = datetime.date(fechaIda)
-    # f2 = datetime.date(fechaRegreso)
-    if fechaIda > fechaRegreso:
+    if fechaIda >= fechaRegreso:
         valido = False
-        errores.append('<p>Error, fecha de ida no puede ser mayor que la fecha de regreso <p>')
+        errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
 
 
 head = """
@@ -124,7 +122,85 @@ head = """
 """
 
 if (valido):
-    pass # enviar la wea
+    data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
+    db.save_order(data)
+    print(head)
+    print("""
+    <body>
+    <main>
+      <div class="b-example-divider"></div>
+
+      <div class="container px-4 py-5" id="custom-cards">
+        <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
+    """)
+    print("""<div class="bg-success p-2 text-white">Encargo agregado correctamente!</div>""")
+    print("""
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+          <div class="col">
+            <div
+              class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
+              style="background-image: url('img/foto1.jpg');"
+              onclick="location.href='agregar-viaje.html'"
+            >
+              <div
+                class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
+              >
+                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                  Agregar Viaje
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div
+              class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
+              style="background-image: url('img/foto2.jpg');"
+              onclick="location.href='agregar-encargo.html'"
+            >
+              <div
+                class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
+              >
+                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                  Agregar Encargo
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div
+              class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
+              style="background-image: url('img/foto3.jpg');"
+              onclick="location.href='ver-viajes.html'"
+            >
+              <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                  Ver Viajes
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div
+              class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
+              style="background-image: url('img/foto4.jpg');"
+              onclick="location.href='ver-encargos.html'"
+            >
+              <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                  Ver Encargos
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+    """)
 else:
     print(head)
     print("""
