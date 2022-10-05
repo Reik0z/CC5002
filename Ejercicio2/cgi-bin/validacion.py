@@ -9,7 +9,7 @@ import html
 cgitb.enable()
 
 form = cgi.FieldStorage()
-html.escape(form)
+
 if 'nombreUsuario' not in form:
     print('<h1> Error en el nombre <h1>')
 else:

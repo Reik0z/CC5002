@@ -6,6 +6,10 @@
     <title>Agregar Viaje</title>
 
     <link
+      rel="icon" type="image/x-icon" href="img/favicon.ico"
+    />
+    
+    <link
       href="style/bootstrap.css"
       rel="stylesheet"
     />
@@ -78,9 +82,8 @@
             <h4 class="mb-3">Datos solicitados</h4>
             <form
               id="formulario"
-              action="#"
+              action="cgi-bin/Grabar-viaje.py"
               method="post"
-              onsubmit="return validacion()"
             >
               <div class="row g-3">
                 <div class="col-md-5">
@@ -89,7 +92,6 @@
                     class="form-select"
                     id="pais"
                     name="pais-origen"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -103,7 +105,6 @@
                     class="form-select"
                     id="ciudad"
                     name="ciudad-origen"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -117,7 +118,6 @@
                     class="form-select"
                     id="paisdestino"
                     name="pais-destino"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -131,7 +131,6 @@
                     class="form-select"
                     id="ciudaddestino"
                     name="ciudad-destino"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -145,8 +144,6 @@
                     id="fechaida"
                     name="fecha-ida"
                     placeholder="año-mes-dia"
-                    value=""
-                    required
                   />
                   <div class="invalid-feedback">
                     Es necesario ingresar una fecha valida.
@@ -163,8 +160,6 @@
                     id="fecharegreso"
                     name="fecha-regreso"
                     placeholder="año-mes-dia"
-                    value=""
-                    required
                   />
                   <div class="invalid-feedback">
                     Es necesario ingresar una fecha valida.
@@ -179,7 +174,6 @@
                     class="form-select"
                     id="espaciodisp"
                     name="espacio-disponible"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                     <option>10x10x10</option>
@@ -196,7 +190,6 @@
                     class="form-select"
                     id="kilosdisp"
                     name="kilos-disponibles"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                     <option>200 gr</option>
@@ -252,6 +245,6 @@
       </footer>
     </div>
     <script src="ext/addpais.js"></script>
-    <script src="validadores/form-validation-aviaje.js"></script>
+    <!-- <script src="validadores/form-validation-aviaje.js"></script> -->
   </body>
 </html>

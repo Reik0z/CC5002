@@ -78,9 +78,8 @@
             <h4 class="mb-3">Datos solicitados</h4>
             <form
               id="formulario"
-              action="#"
+              action="cgi-bin/Grabar-viaje.py"
               method="post"
-              onsubmit="return validacion()"
             >
               <div class="row g-3">
                 <div class="col-10">
@@ -92,7 +91,7 @@
                     id="descripcion"
                     name="descripcion"
                     placeholder=""
-                    required
+                    
                   ></textarea>
                 </div>
 
@@ -104,7 +103,6 @@
                     class="form-select"
                     id="espaciosol"
                     name="espacio-solicitado"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                     <option>10x10x10</option>
@@ -121,7 +119,6 @@
                     class="form-select"
                     id="kilossol"
                     name="kilos-solicitados"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                     <option>200 gr</option>
@@ -139,7 +136,6 @@
                     class="form-select"
                     id="pais"
                     name="pais-origen"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -153,7 +149,7 @@
                     class="form-select"
                     id="ciudad"
                     name="ciudad-origen"
-                    required
+                    
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -167,7 +163,6 @@
                     class="form-select"
                     id="paisdestino"
                     name="pais-destino"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -181,7 +176,6 @@
                     class="form-select"
                     id="ciudaddestino"
                     name="ciudad-destino"
-                    required
                   >
                     <option value="">Seleccionar...</option>
                   </select>
@@ -259,6 +253,6 @@
       })
     </script>
     <script src="ext/addpais.js"></script>
-    <script src="validadores/form-validation-aencargo.js"></script>
+    <!-- <script src="validadores/form-validation-aencargo.js"></script> -->
   </body>
 </html>
