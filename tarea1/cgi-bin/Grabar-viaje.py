@@ -122,8 +122,8 @@ head = """
 """
 
 if (valido):
-    data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
-    db.save_order(data)
+    # data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
+    # db.save_order(data)
     print(head)
     print("""
     <body>

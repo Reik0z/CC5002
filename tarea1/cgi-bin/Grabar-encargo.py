@@ -6,7 +6,7 @@ import cgitb
 import sys
 import html
 import re
-import db
+# import db
 
 cgitb.enable(display=0, logdir="/path/to/logdir")  
 
@@ -117,12 +117,89 @@ head = """
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
+    <style>
+      .bd-placeholder-/img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-/img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        color: #fff;
+        border-radius: .75rem;
+      }
+
+      .icon-link {
+        display: inline-flex;
+        align-items: center;
+      }
+      .icon-link > .bi {
+        margin-top: .125rem;
+        margin-left: .125rem;
+        transition: transform .25s ease-in-out;
+        fill: currentColor;
+      }
+      .icon-link:hover > .bi {
+        transform: translate(.25rem);
+      }
+
+      .icon-square {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        border-radius: .75rem;
+      }
+
+      .rounded-4 { border-radius: .5rem; }
+      .rounded-5 { border-radius: 1rem; }
+
+      .text-shadow-1 { text-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25); }
+      .text-shadow-2 { text-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25); }
+      .text-shadow-3 { text-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .25); }
+
+      .card-cover {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+      }
+    </style>
+
   </head>
 """
 
 if (valido):
-    data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
-    db.save_order(data)
+    # data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
+    # db.save_order(data)
     print(head)
     print("""
     <body>
@@ -138,7 +215,7 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto1.jpg');"
+              style="background-image: url('/img/foto1.jpg');"
               onclick="location.href='agregar-viaje.html'"
             >
               <div
@@ -154,7 +231,7 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto2.jpg');"
+              style="background-image: url('/img/foto2.jpg');"
               onclick="location.href='agregar-encargo.html'"
             >
               <div
@@ -170,7 +247,7 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto3.jpg');"
+              style="background-image: url('/img/foto3.jpg');"
               onclick="location.href='ver-viajes.html'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
@@ -184,7 +261,7 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto4.jpg');"
+              style="background-image: url('/img/foto4.jpg');"
               onclick="location.href='ver-encargos.html'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
