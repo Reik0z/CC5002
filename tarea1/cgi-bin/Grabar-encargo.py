@@ -6,89 +6,81 @@ import cgitb
 import sys
 import html
 import re
-# import db
+from db import DB
 
-cgitb.enable(display=0, logdir="/path/to/logdir")  
+cgitb.enable()
 
 form = cgi.FieldStorage()
 
-# db = db.DB("localhost", "root", "", database) #base de datos que tengo yo ej: tarea 2
+db = DB('localhost', 'root', '', 'tarea2') #base de datos que tengo yo ej: tarea 2
 
-valido = True
 errores = []
 
 # Revisamos los select ingresados
 if 'pais-origen' not in form:
-    valido = False
     errores.append('<p> Error, seleccione un pais de origen valido </p>')
 else:
     paisOrigen = form.getvalue('pais-origen')
 
 if 'ciudad-origen' not in form:
-    valido = False
     errores.append('<p> Error, seleccione una ciudad de origen valida </p>')
 else:
     ciudadOrigen = form.getvalue('ciudad-origen')
 
 if 'pais-destino' not in form:
-    valido = False
     errores.append('<p> Error, seleccione un pais de destino valido </p>')
 else:
     paisDestino = form.getvalue('pais-destino')
 
 if 'ciudad-destino' not in form:
-    valido = False
     errores.append('<p> Error, seleccione una ciudad de destino valida </p>')
 else:
     ciudadDestino = form.getvalue('ciudad-destino')
 
 # Revisamos que las ciudades y paises sean distintas
-if (valido):
+if (errores == []):
     if paisOrigen == paisDestino:
-        valido = False
         errores.append('<p> Error, envio al mismo pais</p>')
     if ciudadOrigen == ciudadDestino:
-        valido = False
         errores.append('<p> Error, envio a la misma ciudad</p>')
 
 # Seguimos revisando select
 if 'espacio-solicitado' not in form:
-    valido = False
     errores.append('<p> Error, seleccione espacio disponible </p>')
 else:
     espacioDisponible = form.getvalue('espacio-solicitado')
 
 if 'kilos-solicitados' not in form:
-    valido = False
     errores.append('<p> Error, seleccione kilos solicitados </p>')
 else:
     kilosDisponibles = form.getvalue('kilos-solicitados')
 
 # Revisamos ingreso sin select
 if 'descripcion' not in form:
-    valido = False
     errores.append('<p> Error, ingrese una descripcion </p>')
 else:
     desc = form.getvalue('descripcion')
+    if len(desc) > 250:
+        errores.append('<p> Error, descripcion muy larga </p>')
 
 if 'email' not in form:
-    valido = False
     errores.append('<p> Error, ingrese un email valido </p>')
 else:
     correo = form.getvalue('email')
-    if re.match(r"^([A-Z,a-z,0-9_\-\.])+\@([A-Z,a-z,0-9_\-\.])+\.([A-Z,a-z]{2,4})$/", correo):
-        valido = False
-        erroes.append('<p>Error, formato del email.</p>')
+    patron_email = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    if not (re.match(patron_email, correo)):
+        errores.append('<p>Error, formato del email.</p>')
 
+telefono_existe = False
 if 'celular' in form:
+    telefono_existe = True
     telefono = form.getvalue('celular')
-    if re.match(r"^\+\d{11}$/", telefono):
-        valido = False
+    patron_numero = "^\\+?\d{7,15}$"
+    if not (re.match(patron_numero, telefono)):
         errores.append('<p>Error, formato del numero de telefono.</p>')
 
 # Revisamos archivos subidos
 if 'foto-encargo-0' not in form:
-    valido = False
     errores.append('<p>Error, falta adjuntar foto.<p>')
 else:
     fileobj = form['foto-encargo-0']
@@ -117,89 +109,31 @@ head = """
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-    <style>
-      .bd-placeholder-/img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-/img-lg {
-          font-size: 3.5rem;
-        }
-      }
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .feature-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 4rem;
-        height: 4rem;
-        margin-bottom: 1rem;
-        font-size: 2rem;
-        color: #fff;
-        border-radius: .75rem;
-      }
-
-      .icon-link {
-        display: inline-flex;
-        align-items: center;
-      }
-      .icon-link > .bi {
-        margin-top: .125rem;
-        margin-left: .125rem;
-        transition: transform .25s ease-in-out;
-        fill: currentColor;
-      }
-      .icon-link:hover > .bi {
-        transform: translate(.25rem);
-      }
-
-      .icon-square {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 3rem;
-        height: 3rem;
-        font-size: 1.5rem;
-        border-radius: .75rem;
-      }
-
-      .rounded-4 { border-radius: .5rem; }
-      .rounded-5 { border-radius: 1rem; }
-
-      .text-shadow-1 { text-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25); }
-      .text-shadow-2 { text-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25); }
-      .text-shadow-3 { text-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .25); }
-
-      .card-cover {
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-      }
-    </style>
-
   </head>
 """
 
-if (valido):
-    # data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
-    # db.save_order(data)
+if (errores == []):
+    sql_origen = '''
+                SELECT id
+                FROM ciudad
+                WHERE nombre = '{}'
+                '''.format(ciudadOrigen)
+    db.cursor.execute(sql_origen)
+    origen = db.cursor.fetchall()[0][0]
+    
+    sql_destino = '''
+                SELECT id
+                FROM ciudad
+                WHERE nombre = '{}'
+                '''.format(ciudadDestino)
+    db.cursor.execute(sql_destino)
+    destino = db.cursor.fetchall()[0][0]
+
+    kilosDisponibles = int(kilosDisponibles)
+    espacioDisponible = int(espacioDisponible)
+
+    data = (origen, destino, fileobj, espacioDisponible, kilosDisponibles, correo)
+    db.save_order(data)
     print(head)
     print("""
     <body>
@@ -210,13 +144,14 @@ if (valido):
         <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
     """)
     print("""<div class="bg-success p-2 text-white">Encargo agregado correctamente!</div>""")
+    print("<h3>" + str(data) + "<h3>")
     print("""
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto1.jpg');"
-              onclick="location.href='agregar-viaje.html'"
+              onclick="location.href='../agregar-viaje.html'"
             >
               <div
                 class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
@@ -232,7 +167,7 @@ if (valido):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto2.jpg');"
-              onclick="location.href='agregar-encargo.html'"
+              onclick="location.href='../agregar-encargo.html'"
             >
               <div
                 class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
@@ -248,7 +183,7 @@ if (valido):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto3.jpg');"
-              onclick="location.href='ver-viajes.html'"
+              onclick="location.href='../ver-viajes.html'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
@@ -262,7 +197,7 @@ if (valido):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto4.jpg');"
-              onclick="location.href='ver-encargos.html'"
+              onclick="location.href='../ver-encargos.html'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">

@@ -7,99 +7,91 @@ import sys
 import html
 import re
 import datetime
+from db import DB
 
-cgitb.enable(display=0, logdir="/path/to/logdir")  
+cgitb.enable()
 
 form = cgi.FieldStorage()
 
-valido = True
+db = DB('localhost', 'root', '', 'tarea2')
+
 errores = []
 
 # Revisamos los select ingresados
 if 'pais-origen' not in form:
-    valido = False
     errores.append('<p> Error, seleccione un pais de origen valido </p>')
 else:
     paisOrigen = form.getvalue('pais-origen')
 
 if 'ciudad-origen' not in form:
-    valido = False
     errores.append('<p> Error, seleccione una ciudad de origen valida </p>')
 else:
     ciudadOrigen = form.getvalue('ciudad-origen')
 
 if 'pais-destino' not in form:
-    valido = False
     errores.append('<p> Error, seleccione un pais de destino valido </p>')
 else:
     paisDestino = form.getvalue('pais-destino')
 
 if 'ciudad-destino' not in form:
-    valido = False
     errores.append('<p> Error, seleccione una ciudad de destino valida </p>')
 else:
     ciudadDestino = form.getvalue('ciudad-destino')
 
 # Revisamos que las ciudades y paises sean distintas
-if valido:
+if errores == []:
     if paisOrigen == paisDestino:
-        valido = False
         errores.append('<p> Error, envio al mismo pais</p>')
     if ciudadOrigen == ciudadDestino:
-        valido = False
         errores.append('<p> Error, envio a la misma ciudad</p>')
 
 if 'espacio-disponible' not in form:
-    valido = False
     errores.append('<p> Error, seleccione espacio disponible </p>')
 else:
     espacioDisponible = form.getvalue('espacio-disponible')
 
 if 'kilos-disponibles' not in form:
-    valido = False
     errores.append('<p> Error, seleccione kilos disponibles </p>')
 else:
     kilosDisponibles = form.getvalue('kilos-disponibles')
 
 # Revisamos que esten ingresados
 if 'email' not in form:
-    valido = False
     errores.append('<p> Error, ingrese un email valido </p>')
 else:
     correo = form.getvalue('email')
-    if re.match(r"^([A-Z,a-z,0-9_\-\.])+\@([A-Z,a-z,0-9_\-\.])+\.([A-Z,a-z]{2,4})$/", correo):
-        valido = False
-        erroes.append('<p>Error, formato del email.</p>')
+    patron_email = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    if not (re.match(patron_email, correo)):
+        errores.append('<p>Error, formato del email.</p>')
 
 if 'celular' in form:
     telefono = form.getvalue('celular')
-    if re.match(r"^\+\d{11}$/", telefono):
-        valido = False
+    patron_numero = "^\\+?\d{7,15}$"
+    if not (re.match(patron_numero, telefono)):
         errores.append('<p>Error, formato del numero de telefono.</p>')
+else:
+    telefono = ''
 
 # Revisamos que sean fechas distintas
 if 'fecha-ida' not in form:
-    valido = False
     errores.append('<p> Error, seleccione una fecha de ida valida <p>')
 else:
-    fechaIda = form.getvalue('fecha-ida')
-    if re.match(r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$", fechaIda):
-        valido = False
-        errores.append('<p>Error, formato de fecha1 no valido.</p>')
+	fechaIda = form.getvalue('fecha-ida')
+
+patron_fecha = "/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/"
+# if errores == [] and (not (re.match(patron_fecha, fechaIda))):
+#     errores.append('<p>Error, formato de fecha1 no valido.</p>')
 
 if 'fecha-regreso' not in form:
-    valido = False
     errores.append('<p> Error, seleccione una fecha de regreso valida </p>')
 else:
-    fechaRegreso = form.getvalue('fecha-regreso')
-    if re.match(r"([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$", fechaRegreso):
-        valido = False
-        errores.append('<p>Error, formato de fecha2 no valido.</p>')
+	fechaRegreso = form.getvalue('fecha-regreso')
 
-if valido:
-    if fechaIda >= fechaRegreso:
-        valido = False
-        errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
+# if errores == [] and (not (re.match(patron_fecha, fechaRegreso))):
+#         errores.append('<p>Error, formato de fecha2 no valido.</p>')
+
+if fechaIda >= fechaRegreso:
+    errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
 
 
 head = """
@@ -121,9 +113,28 @@ head = """
   </head>
 """
 
-if (valido):
-    # data = (paisDestino, paisOrigen, ciudadDestino, ciudadOrigen, espacioDisponible, kilosDisponibles, correo, desc, telefono, fileobj)
-    # db.save_order(data)
+if (errores == []):
+    sql_origen = '''
+                SELECT id
+                FROM ciudad
+                WHERE nombre = '{}'
+                '''.format(ciudadOrigen)
+    db.cursor.execute(sql_origen)
+    origen = db.cursor.fetchall()[0][0]
+    
+    sql_destino = '''
+                SELECT id
+                FROM ciudad
+                WHERE nombre = '{}'
+                '''.format(ciudadDestino)
+    db.cursor.execute(sql_destino)
+    destino = db.cursor.fetchall()[0][0]
+
+    kilosDisponibles = int(kilosDisponibles)
+    espacioDisponible = int(espacioDisponible)
+
+    data = (origen, destino, fechaIda, fechaRegreso, kilosDisponibles, espacioDisponible, correo, telefono)
+    db.save_travel(data) # aqui falla el grabar viaje
     print(head)
     print("""
     <body>
@@ -134,13 +145,14 @@ if (valido):
         <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
     """)
     print("""<div class="bg-success p-2 text-white">Encargo agregado correctamente!</div>""")
+    print("<p>"+ str(data) + "<p>")
     print("""
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto1.jpg');"
-              onclick="location.href='agregar-viaje.html'"
+              style="background-image: url('/img/foto1.jpg');"
+              onclick="location.href='../agregar-viaje.html'"
             >
               <div
                 class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
@@ -155,8 +167,8 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto2.jpg');"
-              onclick="location.href='agregar-encargo.html'"
+              style="background-image: url('/img/foto2.jpg');"
+              onclick="location.href='../agregar-encargo.html'"
             >
               <div
                 class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
@@ -171,8 +183,8 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto3.jpg');"
-              onclick="location.href='ver-viajes.html'"
+              style="background-image: url('/img/foto3.jpg');"
+              onclick="location.href='../ver-viajes.html'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
@@ -185,8 +197,8 @@ if (valido):
           <div class="col">
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              style="background-image: url('img/foto4.jpg');"
-              onclick="location.href='ver-encargos.html'"
+              style="background-image: url('/img/foto4.jpg');"
+              onclick="location.href='../ver-encargos.html'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">

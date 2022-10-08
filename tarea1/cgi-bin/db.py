@@ -14,7 +14,7 @@ class DB:
 
     def save_order(self, data):
         # Procesar archivo
-        fileobj = data[3]
+        fileobj = data[2]
         filename = fileobj.filename
         
         sql = "SELECT COUNT(id) FROM foto" # Cuenta los archivos que hay en la base de datos
@@ -42,6 +42,21 @@ class DB:
                 VALUES (%s, %s, %s, %s)
                 '''
             self.cursor.execute(sql, data[:3]+ (id_foto,))  # ejecuto la consulta
+            self.db.commit()                # modifico la base de datos
+            
+        except:
+            print("ERROR AL GUARDAR EN LA BASE DE DATOS")
+            sys.exit()
+
+    def save_travel(self, data):
+
+        try:
+            sql = '''
+                INSERT INTO  viaje (origen, destino, fecha_ida, fecha_regreso, kilos_disponible, espacio_disponible, email_viajero, celular_viajero)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                '''
+            # guardar viaje
+            self.cursor.execute(sql, data)  # ejecuto la consulta
             self.db.commit()                # modifico la base de datos
             
         except:
