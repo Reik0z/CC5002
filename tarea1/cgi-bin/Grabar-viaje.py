@@ -90,7 +90,7 @@ else:
 # if errores == [] and (not (re.match(patron_fecha, fechaRegreso))):
 #         errores.append('<p>Error, formato de fecha2 no valido.</p>')
 
-if fechaIda >= fechaRegreso:
+if fechaIda >= fechaRegreso: # ordenar si es que no existe
     errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
 
 
@@ -110,31 +110,20 @@ head = """
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
+    <link
+      href="../style/bootstrap.css"
+      rel="stylesheet"
+    />
+
   </head>
 """
 
 if (errores == []):
-    sql_origen = '''
-                SELECT id
-                FROM ciudad
-                WHERE nombre = '{}'
-                '''.format(ciudadOrigen)
-    db.cursor.execute(sql_origen)
-    origen = db.cursor.fetchall()[0][0]
-    
-    sql_destino = '''
-                SELECT id
-                FROM ciudad
-                WHERE nombre = '{}'
-                '''.format(ciudadDestino)
-    db.cursor.execute(sql_destino)
-    destino = db.cursor.fetchall()[0][0]
+    origen = db.get_data('id', 'ciudad', 'nombre', ciudadOrigen)
+    destino = db.get_data('id', 'ciudad', 'nombre', ciudadDestino)
 
-    kilosDisponibles = int(kilosDisponibles)
-    espacioDisponible = int(espacioDisponible)
-
-    data = (origen, destino, fechaIda, fechaRegreso, kilosDisponibles, espacioDisponible, correo, telefono)
-    db.save_travel(data) # aqui falla el grabar viaje
+    data = (origen, destino, fechaIda, fechaRegreso, int(kilosDisponibles), int(espacioDisponible), correo, telefono)
+    db.save_travel(data)
     print(head)
     print("""
     <body>
@@ -145,7 +134,6 @@ if (errores == []):
         <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
     """)
     print("""<div class="bg-success p-2 text-white">Encargo agregado correctamente!</div>""")
-    print("<p>"+ str(data) + "<p>")
     print("""
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div class="col">
@@ -184,7 +172,7 @@ if (errores == []):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto3.jpg');"
-              onclick="location.href='../ver-viajes.html'"
+              onclick="location.href='/cgi-bin/Tabla-viaje.py'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">

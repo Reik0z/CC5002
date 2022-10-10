@@ -14,9 +14,9 @@ class DB:
 
     def save_order(self, data):
         # Procesar archivo
-        fileobj = data[2]
-        filename = fileobj.filename
-        
+        fileobj = data[7]
+        filename = fileobj.value
+
         sql = "SELECT COUNT(id) FROM foto" # Cuenta los archivos que hay en la base de datos
         self.cursor.execute(sql)
         total = self.cursor.fetchall()[0][0] + 1
@@ -26,22 +26,22 @@ class DB:
         #       Lo que se conoce como un datarace
 
         # Guardar archivo
-        
         try:
-            open(f"media/{filename_hash}", "wb").write(fileobj.file.read()) # guarda el archivo localmente
-            sql_file = '''
-                INSERT INTO foto (nombre, path) 
-                VALUES (%s, %s)
-                '''
-            self.cursor.execute(sql_file, (filename, filename_hash))  # ejecuta la query que guarda el archivo en base de datos
-           
-            # guardar pedido
-            id_foto = self.cursor.getlastrowid() # recupera el último id ingresado
+            # guardar encargo
             sql ='''
-                INSERT INTO pedidos (nombre, email, comentarios, foto) 
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO encargo (descripcion, espacio, kilos, origen, destino, email_encargador, celular_encargador) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 '''
-            self.cursor.execute(sql, data[:3]+ (id_foto,))  # ejecuto la consulta
+            self.cursor.execute(sql, data[:7])  # ejecuto la consulta
+            encargo_id = self.cursor.getlastrowid() # recupera el último id ingresado
+
+            open(f"media/{filename_hash}", "wb").write(fileobj.file.read()) # guarda el archivo localmente
+
+            sql_file = '''
+                INSERT INTO foto (ruta_archivo, nombre_archivo, encargo_id)
+                VALUES (%s, %s, %s)
+                '''
+            self.cursor.execute(sql_file, (filename_hash, filename, encargo_id))  # ejecuta la query que guarda el archivo en base de datos
             self.db.commit()                # modifico la base de datos
             
         except:
@@ -49,7 +49,6 @@ class DB:
             sys.exit()
 
     def save_travel(self, data):
-
         try:
             sql = '''
                 INSERT INTO  viaje (origen, destino, fecha_ida, fecha_regreso, kilos_disponible, espacio_disponible, email_viajero, celular_viajero)
@@ -63,12 +62,11 @@ class DB:
             print("ERROR AL GUARDAR EN LA BASE DE DATOS")
             sys.exit()
 
-    def get_data(self):
-        
+    def get_data(self, columna, tabla, parametro, dato):
         sql = '''
-            SELECT p.nombre, p.email, p.comentarios, c.path FROM pedidos p
-            LEFT JOIN foto c
-            ON p.foto = c.id
-            '''
+            SELECT {} 
+            FROM {}
+            WHERE {} = '{}'
+            '''.format(columna, tabla, parametro, dato)
         self.cursor.execute(sql)
-        return self.cursor.fetchall()
+        return self.cursor.fetchall()[0][0]

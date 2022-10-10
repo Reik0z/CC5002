@@ -71,13 +71,12 @@ else:
     if not (re.match(patron_email, correo)):
         errores.append('<p>Error, formato del email.</p>')
 
-telefono_existe = False
 if 'celular' in form:
-    telefono_existe = True
     telefono = form.getvalue('celular')
     patron_numero = "^\\+?\d{7,15}$"
     if not (re.match(patron_numero, telefono)):
         errores.append('<p>Error, formato del numero de telefono.</p>')
+telefono = ''
 
 # Revisamos archivos subidos
 if 'foto-encargo-0' not in form:
@@ -113,26 +112,10 @@ head = """
 """
 
 if (errores == []):
-    sql_origen = '''
-                SELECT id
-                FROM ciudad
-                WHERE nombre = '{}'
-                '''.format(ciudadOrigen)
-    db.cursor.execute(sql_origen)
-    origen = db.cursor.fetchall()[0][0]
-    
-    sql_destino = '''
-                SELECT id
-                FROM ciudad
-                WHERE nombre = '{}'
-                '''.format(ciudadDestino)
-    db.cursor.execute(sql_destino)
-    destino = db.cursor.fetchall()[0][0]
+    origen = db.get_data('id', 'ciudad', 'nombre', ciudadOrigen)
+    destino = db.get_data('id', 'ciudad', 'nombre', ciudadDestino)
 
-    kilosDisponibles = int(kilosDisponibles)
-    espacioDisponible = int(espacioDisponible)
-
-    data = (origen, destino, fileobj, espacioDisponible, kilosDisponibles, correo)
+    data = (desc, int(espacioDisponible), int(kilosDisponibles), origen, destino, correo, telefono, fileobj)
     db.save_order(data)
     print(head)
     print("""
@@ -144,7 +127,7 @@ if (errores == []):
         <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
     """)
     print("""<div class="bg-success p-2 text-white">Encargo agregado correctamente!</div>""")
-    print("<h3>" + str(data) + "<h3>")
+    print("<h3>" + str(data[:7]) + (data[7].value) + "<h3>")
     print("""
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div class="col">

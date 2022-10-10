@@ -9,7 +9,7 @@ db = DB('localhost', 'root', '', 'tarea2')
 
 sql_total = '''
             SELECT COUNT(id)
-            FROM viaje
+            FROM encargo
             '''
 
 db.cursor.execute(sql_total)
@@ -22,43 +22,48 @@ pag = 0
 
 def tabla(actual):
     sql_elementos = '''
-                    SELECT id, origen, destino, fecha_ida, fecha_regreso, kilos_disponible, espacio_disponible, email_viajero, celular_viajero 
-                    FROM viaje ORDER BY id ASC LIMIT {}, 5
+                    SELECT id, descripcion, espacio, kilos, origen, destino, imagen, email_encargador, celular_encargador 
+                    FROM encargo ORDER BY id ASC LIMIT {} 5
                     '''.format(actual)
     db.cursor.execute(sql_elementos)
     datos = db.cursor.fetchall()
 
-    datos = datos[0][1:8]
+    datos = datos[0][1:]
 
-    origen = db.get_data('nombre', 'ciudad', 'id', datos[0])
-    destino = db.get_data('nombre', 'ciudad', 'id', datos[1])
-    espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[4])
-    kilos = db.get_data('valor', 'kilos_encargo', 'id', datos[5])
-    fecha_ida = datos[2]
-    fecha_regreso = datos[3]
+    encargo_id = self.cursor.getlastrowid()
+
+    # Obtenemos la foto
+    foto = db.get_data('ruta_archivo', 'foto', 'encargo_id', encargo_id)
+
+    origen = db.get_data('nombre', 'ciudad', 'id', datos[3])
+    destino = db.get_data('nombre', 'ciudad', 'id', datos[4])
+    espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[1])
+    kilos = db.get_data('valor', 'kilos_encargo', 'id', datos[2])
+
 
     tabla = '''
-        <tr onclick="location.href='../informacion-viaje.html#viaje-1'">
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        </tr>
-        '''.format(origen, destino, fecha_ida, fecha_regreso, espacio, kilos, datos[6])
+              <tr onclick="location.href='informacion-encargo.html#encargo-1'">
+                <td>{}}</td>
+                <td>{}</td>
+                <td><img src="media/{}" height="120" width="120" alt="foto del encargo {}"></td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+              </tr>
+        '''.format(origen, destino, foto, encargo_id, espacio, kilos, datos[5])
     print(tabla)
 
-head = '''<!DOCTYPE html>
+
+head = '''
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ver Viajes</title>
+    <title>Ver Encargos</title>
 
     <link
-      href="style/bootstrap.css"
+      href="../style/bootstrap.css"
       rel="stylesheet"
     />
     <style>
@@ -115,14 +120,14 @@ head = '''<!DOCTYPE html>
     </style>
 
     <script
-      src="style/bootstrap.js"
+      src="../style/bootstrap.js"
     ></script>
   </head>
-    <body class="bg-light">
+  <body class="bg-light">
     <div class="container">
       <main>
         <div class="py-5 text-center">
-          <h2>Ver Viajes</h2>
+          <h2>Ver Encargos</h2>
         </div>
         <div>
           <table class="table table-hover">
@@ -130,8 +135,7 @@ head = '''<!DOCTYPE html>
               <tr>
                 <th scope="col">Origen</th>
                 <th scope="col">Destino</th>
-                <th scope="col">Fecha ida</th>
-                <th scope="col">Fecha llegada</th>
+                <th scope="col">Fotos</th>
                 <th scope="col">Espacio</th>
                 <th scope="col">Kilos</th>
                 <th scope="col">Email</th>
@@ -142,7 +146,7 @@ head = '''<!DOCTYPE html>
 
 body = '''
             </tbody>
-            </table>
+          </table>
             <nav aria-label="...">
                 <ul class="pagination">
                     <li class="page-item disabled">
@@ -164,7 +168,8 @@ body = '''
       </footer>
     </div>
   </body>
-</html>'''.format(pag)
+</html>
+'''.format(pag)
 
 print(head)
 
