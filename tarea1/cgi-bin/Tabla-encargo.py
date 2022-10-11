@@ -7,6 +7,9 @@ from db import DB
 
 db = DB('localhost', 'root', '', 'tarea2')
 
+form = cgi.FieldStorage()
+pag = int(form.getvalue('page'))
+
 sql_total = '''
             SELECT COUNT(id)
             FROM encargo
@@ -15,43 +18,42 @@ sql_total = '''
 db.cursor.execute(sql_total)
 total = db.cursor.fetchall()[0][0]
 
-if total > 5:
+if total/((pag+1)*5) > 1:
     total = 5
-
-pag = 0
+else:
+    total= total%5
 
 def tabla(actual):
     sql_elementos = '''
-                    SELECT id, descripcion, espacio, kilos, origen, destino, imagen, email_encargador, celular_encargador 
-                    FROM encargo ORDER BY id ASC LIMIT {} 5
+                    SELECT id, descripcion, espacio, kilos, origen, destino, email_encargador, celular_encargador 
+                    FROM encargo 
+                    ORDER BY id ASC LIMIT {}, 5
                     '''.format(actual)
     db.cursor.execute(sql_elementos)
-    datos = db.cursor.fetchall()
+    datos_total = db.cursor.fetchall()
 
-    datos = datos[0][1:]
+    for i in range(0, total):
+        datos = datos_total[i]
 
-    encargo_id = self.cursor.getlastrowid()
-
-    # Obtenemos la foto
-    foto = db.get_data('ruta_archivo', 'foto', 'encargo_id', encargo_id)
-
-    origen = db.get_data('nombre', 'ciudad', 'id', datos[3])
-    destino = db.get_data('nombre', 'ciudad', 'id', datos[4])
-    espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[1])
-    kilos = db.get_data('valor', 'kilos_encargo', 'id', datos[2])
+        encargo_id = datos[0]
+        foto = db.get_data('ruta_archivo', 'foto', 'encargo_id', encargo_id)
+        origen = db.get_data('nombre', 'ciudad', 'id', datos[4])
+        destino = db.get_data('nombre', 'ciudad', 'id', datos[5])
+        espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[2])
+        kilos = db.get_data('valor', 'kilos_encargo', 'id', datos[3])
 
 
-    tabla = '''
-              <tr onclick="location.href='informacion-encargo.html#encargo-1'">
-                <td>{}}</td>
-                <td>{}</td>
-                <td><img src="media/{}" height="120" width="120" alt="foto del encargo {}"></td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-              </tr>
-        '''.format(origen, destino, foto, encargo_id, espacio, kilos, datos[5])
-    print(tabla)
+        tabla = '''
+          <tr onclick="location.href='Mostrar-encargo.py?id_encargo={}'">
+            <td>{}</td>
+            <td>{}</td>
+            <td><img src="../media/{}" height="120" width="120" alt="foto del encargo {}"></td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+          </tr>
+            '''.format(encargo_id, origen, destino, foto, encargo_id, espacio, kilos, datos[6])
+        print(tabla)
 
 
 head = '''
@@ -149,14 +151,14 @@ body = '''
           </table>
             <nav aria-label="...">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
+                    <li class="page-item">
+                    <a class="page-link" href="?page={}">Anterior</a>
                     </li>
                     <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">{}</a>
+                    <a class="page-link">{}</a>
                     </li>
                     <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                    <a class="page-link" href="?page={}">Siguiente</a>
                     </li>
                 </ul>
             </nav>
@@ -169,11 +171,8 @@ body = '''
     </div>
   </body>
 </html>
-'''.format(pag)
+'''.format(pag-1, pag, pag+1)
 
 print(head)
-
-for i in range(pag, pag+total):
-    tabla(i)
-
+tabla(pag*4)
 print(body)

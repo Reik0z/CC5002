@@ -64,13 +64,13 @@ else:
     if not (re.match(patron_email, correo)):
         errores.append('<p>Error, formato del email.</p>')
 
-if 'celular' in form:
+if 'celular' not in form:
+    telefono = ''
+else:
     telefono = form.getvalue('celular')
     patron_numero = "^\\+?\d{7,15}$"
     if not (re.match(patron_numero, telefono)):
         errores.append('<p>Error, formato del numero de telefono.</p>')
-else:
-    telefono = ''
 
 # Revisamos que sean fechas distintas
 if 'fecha-ida' not in form:
@@ -79,7 +79,8 @@ else:
 	fechaIda = form.getvalue('fecha-ida')
 
 patron_fecha = "/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/"
-# if errores == [] and (not (re.match(patron_fecha, fechaIda))):
+# if errores == [] 
+#   if not (re.match(patron_fecha, fechaIda)):
 #     errores.append('<p>Error, formato de fecha1 no valido.</p>')
 
 if 'fecha-regreso' not in form:
@@ -87,11 +88,13 @@ if 'fecha-regreso' not in form:
 else:
 	fechaRegreso = form.getvalue('fecha-regreso')
 
-# if errores == [] and (not (re.match(patron_fecha, fechaRegreso))):
+# if errores == []:
+#   if not (re.match(patron_fecha, fechaRegreso)):
 #         errores.append('<p>Error, formato de fecha2 no valido.</p>')
 
-if fechaIda >= fechaRegreso: # ordenar si es que no existe
-    errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
+if errores == []:
+  if fechaIda >= fechaRegreso: # ordenar si es que no existe
+      errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
 
 
 head = """
@@ -172,7 +175,7 @@ if (errores == []):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto3.jpg');"
-              onclick="location.href='/cgi-bin/Tabla-viaje.py'"
+              onclick="location.href='/cgi-bin/Tabla-viaje.py?page=0'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
@@ -186,7 +189,7 @@ if (errores == []):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto4.jpg');"
-              onclick="location.href='../ver-encargos.html'"
+              onclick="location.href='/cgi-bin/Tabla-encargo.py?page=0'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">

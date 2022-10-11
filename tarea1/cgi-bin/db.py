@@ -15,7 +15,7 @@ class DB:
     def save_order(self, data):
         # Procesar archivo
         fileobj = data[7]
-        filename = fileobj.value
+        filename = fileobj.filename
 
         sql = "SELECT COUNT(id) FROM foto" # Cuenta los archivos que hay en la base de datos
         self.cursor.execute(sql)

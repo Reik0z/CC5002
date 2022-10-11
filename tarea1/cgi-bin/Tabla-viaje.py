@@ -7,6 +7,9 @@ from db import DB
 
 db = DB('localhost', 'root', '', 'tarea2')
 
+form = cgi.FieldStorage()
+pag = int(form.getvalue('page'))
+
 sql_total = '''
             SELECT COUNT(id)
             FROM viaje
@@ -15,42 +18,47 @@ sql_total = '''
 db.cursor.execute(sql_total)
 total = db.cursor.fetchall()[0][0]
 
-if total > 5:
+if total/((pag+1)*5) > 1:
     total = 5
-
-pag = 0
+else:
+    total = total%5
 
 def tabla(actual):
     sql_elementos = '''
                     SELECT id, origen, destino, fecha_ida, fecha_regreso, kilos_disponible, espacio_disponible, email_viajero, celular_viajero 
-                    FROM viaje ORDER BY id ASC LIMIT {}, 5
+                    FROM viaje 
+                    ORDER BY id ASC LIMIT {}, 5
                     '''.format(actual)
     db.cursor.execute(sql_elementos)
-    datos = db.cursor.fetchall()
+    datos_todos = db.cursor.fetchall()
 
-    datos = datos[0][1:8]
+    for i in range(0, total):
+      datos = datos_todos[i]
 
-    origen = db.get_data('nombre', 'ciudad', 'id', datos[0])
-    destino = db.get_data('nombre', 'ciudad', 'id', datos[1])
-    espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[4])
-    kilos = db.get_data('valor', 'kilos_encargo', 'id', datos[5])
-    fecha_ida = datos[2]
-    fecha_regreso = datos[3]
+      viaje_id = datos[0]
+      origen = db.get_data('nombre', 'ciudad', 'id', datos[1])
+      destino = db.get_data('nombre', 'ciudad', 'id', datos[2])
+      kilos = db.get_data('valor', 'kilos_encargo', 'id', datos[5])
+      espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[6])
+      fecha_ida = datos[3]
+      fecha_regreso = datos[4]
 
-    tabla = '''
-        <tr onclick="location.href='../informacion-viaje.html#viaje-1'">
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        <td>{}</td>
-        </tr>
-        '''.format(origen, destino, fecha_ida, fecha_regreso, espacio, kilos, datos[6])
-    print(tabla)
+      tabla = '''
+          <tr onclick="location.href='Mostrar-viaje.py?id_viaje={}'">
+          <td>{}</td>
+          <td>{}</td>
+          <td>{}</td>
+          <td>{}</td>
+          <td>{}</td>
+          <td>{}</td>
+          <td>{}</td>
+          </tr>
+          '''.format(viaje_id, origen, destino, fecha_ida.date(), fecha_regreso.date(), espacio, kilos, datos[7])
 
-head = '''<!DOCTYPE html>
+      print(tabla)
+
+head = '''
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -58,7 +66,7 @@ head = '''<!DOCTYPE html>
     <title>Ver Viajes</title>
 
     <link
-      href="style/bootstrap.css"
+      href="../style/bootstrap.css"
       rel="stylesheet"
     />
     <style>
@@ -115,7 +123,7 @@ head = '''<!DOCTYPE html>
     </style>
 
     <script
-      src="style/bootstrap.js"
+      src="../style/bootstrap.js"
     ></script>
   </head>
     <body class="bg-light">
@@ -145,14 +153,14 @@ body = '''
             </table>
             <nav aria-label="...">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
+                    <li class="page-item">
+                    <a class="page-link" href="?page={}">Anterior</a>
                     </li>
                     <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">{}</a>
+                    <a class="page-link">{}</a>
                     </li>
                     <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                    <a class="page-link" href="?page={}">Siguiente</a>
                     </li>
                 </ul>
             </nav>
@@ -164,11 +172,8 @@ body = '''
       </footer>
     </div>
   </body>
-</html>'''.format(pag)
+</html>'''.format(pag-1, pag, pag+1)
 
 print(head)
-
-for i in range(pag, pag+total):
-    tabla(i)
-
+tabla(pag*4)
 print(body)

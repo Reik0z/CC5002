@@ -12,7 +12,7 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-db = DB('localhost', 'root', '', 'tarea2') #base de datos que tengo yo ej: tarea 2
+db = DB('localhost', 'root', '', 'tarea2')
 
 errores = []
 
@@ -71,12 +71,13 @@ else:
     if not (re.match(patron_email, correo)):
         errores.append('<p>Error, formato del email.</p>')
 
-if 'celular' in form:
-    telefono = form.getvalue('celular')
-    patron_numero = "^\\+?\d{7,15}$"
-    if not (re.match(patron_numero, telefono)):
-        errores.append('<p>Error, formato del numero de telefono.</p>')
-telefono = ''
+# if 'celular' not in form:
+#     telefono = ''
+# else:
+#     telefono = form.getvalue('celular')
+#     patron_numero = "^\\+?\d{7,15}$"
+#     if not (re.match(patron_numero, telefono)):
+#         errores.append('<p>Error, formato del numero de telefono.</p>')
 
 # Revisamos archivos subidos
 if 'foto-encargo-0' not in form:
@@ -87,10 +88,10 @@ else:
     if fileobj.filename:
         tipo = fileobj.type
         if tipo not in tipos_soportados:
-            print('Error, formato no valido. {}'.format(tipo))
+            errores.append('Error, formato no valido. {}'.format(tipo))
             sys.exit()
     else:
-        print("Error, archivo no subido.")
+        errores.append("Error, archivo no subido.")
 
 head = """
 <!DOCTYPE html>
@@ -98,7 +99,7 @@ head = """
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agregar Viaje</title>
+    <title>Agregar Encargo</title>
 
     <!-- CSS bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
@@ -116,7 +117,6 @@ if (errores == []):
     destino = db.get_data('id', 'ciudad', 'nombre', ciudadDestino)
 
     data = (desc, int(espacioDisponible), int(kilosDisponibles), origen, destino, correo, telefono, fileobj)
-    db.save_order(data)
     print(head)
     print("""
     <body>
@@ -127,7 +127,7 @@ if (errores == []):
         <h2 class="pb-2 border-bottom" style="text-align:center;">Inicio</h2>
     """)
     print("""<div class="bg-success p-2 text-white">Encargo agregado correctamente!</div>""")
-    print("<h3>" + str(data[:7]) + (data[7].value) + "<h3>")
+    db.save_order(data)
     print("""
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div class="col">
@@ -166,7 +166,7 @@ if (errores == []):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto3.jpg');"
-              onclick="location.href='../ver-viajes.html'"
+              onclick="location.href='/cgi-bin/Tabla-viaje.py?page=0'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
@@ -180,7 +180,7 @@ if (errores == []):
             <div
               class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
               style="background-image: url('/img/foto4.jpg');"
-              onclick="location.href='../ver-encargos.html'"
+              onclick="location.href='/cgi-bin/Tabla-encargo.py?page=0'"
             >
               <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
                 <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
