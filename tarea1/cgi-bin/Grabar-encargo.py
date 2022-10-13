@@ -81,15 +81,22 @@ if telefono != '':
 if 'foto-encargo-0' not in form:
     errores.append('<p>Error, falta adjuntar foto.<p>')
 else:
+    fileobj = (form['foto-encargo-0'],)
+    fileobj += (form['foto-encargo-1'],)
+    fileobj += (form['foto-encargo-2'],)
     tipos_soportados = ['image/jpeg', 'image/jpg', 'image/png']
-    fileobj = form['foto-encargo-0']
-    if fileobj.filename:
-        tipo = fileobj.type
-        if tipo not in tipos_soportados:
-            errores.append('Error, formato no valido. {}'.format(tipo))
-            sys.exit()
-    else:
-        errores.append("Error, archivo no subido.")
+
+    for j in range(0,3):
+        if fileobj[j] == None:
+            fileobj = fileobj[:j]
+            break
+        elif fileobj[j].filename:
+            tipo = fileobj[j].type
+            if tipo not in tipos_soportados:
+                errores.append('Error, formato no valido. {}'.format(tipo))
+                sys.exit()
+        else:
+            errores.append("Error, archivo no subido.")
 
 head = """
 <!DOCTYPE html>

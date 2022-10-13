@@ -129,21 +129,34 @@ body = '''
                 <div class="col-md-6 themed-grid-col">Destino</div>
                 <div class="col-md-4 themed-grid-col">{}</div>
               </div>
+        '''.format(id_encargo, origen, destino)
 
-              <div class="row mb-3 text-center">
-                <div class="col-md-6 themed-grid-col">Fotos</div>
-                <div class="col-md-4 themed-grid-col">
-                  <img
-                    src="../media/{}"
-                    width="640"
-                    height="480"
-                    id="foto-{}"
-                    alt="foto del encargo {}"
-                    onclick="resizeimagen('foto-{}')"
-                  />
-                </div>
-              </div>
+foto_gen = '''
+<div id="carouselfotos" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">'''
 
+# <div class="carousel-item">
+#   <img class="d-block w-100" src="..." alt="Second slide">
+# </div>
+
+# foto_ = '''
+#               <div class="row mb-3 text-center">
+#                 <div class="col-md-6 themed-grid-col">Fotos</div>
+#                 <div class="col-md-4 themed-grid-col">
+#                   <img
+#                     src="../media/{}"
+#                     width="640"
+#                     height="480"
+#                     id="foto-{}"
+#                     alt="foto del encargo {}"
+#                     onclick="resizeimagen('foto-{}')"
+#                   />
+#                 </div>
+#               </div>'''
+
+body_ext = '''  
+          </div>
+        </div>
               <div class="row mb-3 text-center">
                 <div class="col-md-6 themed-grid-col">Espacio</div>
                 <div class="col-md-4 themed-grid-col">{}</div>
@@ -172,9 +185,25 @@ body = '''
           </div>
         </div>
       </main>
-'''.format(id_encargo, origen, destino, ruta_archivo, id_foto, id_foto, id_foto, espacio, kilos, dato_encargo[6], dato_encargo[1], tel)
+'''.format(espacio, kilos, dato_encargo[6], dato_encargo[1], tel)
 
 print(body)
+
+for i in range(0,len(ruta_archivo)):
+  print('''
+    <div class="carousel-item active">
+      <img 
+        class="d-block" 
+        src="../media/{}"
+        width="640"
+        height="480"
+        id="foto-{}"
+        alt="foto del encargo {}"
+        onclick="resizeimagen('foto-{}')"
+    </div>
+''').format(ruta_archivo[i], id_foto[i], id_foto[i], id_foto[i])
+
+print(body_ext)
 print('''
       <script>
         var grande = false;
