@@ -113,7 +113,7 @@ body = '''
         <button
           type="button"
           class="btn btn-outline-dark"
-          onclick="location.href='Tabla-encargo.py'"
+          onclick="location.href='Tabla-encargo.py?page=0'"
         >
           Ver encargos
         </button>

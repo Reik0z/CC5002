@@ -10,6 +10,9 @@ db = DB('localhost', 'root', '', 'tarea2')
 form = cgi.FieldStorage()
 pag = int(form.getvalue('page'))
 
+if pag < 0:
+    pag = 0
+
 sql_total = '''
             SELECT COUNT(id)
             FROM viaje
@@ -24,6 +27,9 @@ else:
     total = total%5
 
 def tabla(actual):
+    if actual != 0:
+        actual =  actual*5 - 1
+
     sql_elementos = '''
                     SELECT id, origen, destino, fecha_ida, fecha_regreso, kilos_disponible, espacio_disponible, email_viajero, celular_viajero 
                     FROM viaje 
@@ -148,6 +154,8 @@ head = '''
             <tbody>
             '''
 
+pag_v = pag+1
+
 body = '''
             </tbody>
             </table>
@@ -172,8 +180,8 @@ body = '''
       </footer>
     </div>
   </body>
-</html>'''.format(pag-1, pag, pag+1)
+</html>'''.format(pag-1, pag_v, pag+1)
 
 print(head)
-tabla(pag*4)
+tabla(pag)
 print(body)

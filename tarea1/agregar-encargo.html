@@ -251,8 +251,8 @@
       const imp = '<input class="form-control" type="file" id="formFileMultiple" name="foto-encargo-'+numero-1+'">';
       boton.addEventListener('click', function(){
             if (numero < 3){
-              caja_files.innerHTML += imp;
               numero++;
+              caja_files.innerHTML += imp;
             }
             else{
               alert("NO SE PUEDEN MÁS");

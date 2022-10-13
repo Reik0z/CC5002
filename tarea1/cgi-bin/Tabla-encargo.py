@@ -10,6 +10,9 @@ db = DB('localhost', 'root', '', 'tarea2')
 form = cgi.FieldStorage()
 pag = int(form.getvalue('page'))
 
+if pag < 0:
+    pag = 0
+
 sql_total = '''
             SELECT COUNT(id)
             FROM encargo
@@ -21,9 +24,12 @@ total = db.cursor.fetchall()[0][0]
 if total/((pag+1)*5) > 1:
     total = 5
 else:
-    total= total%5
+    total = total%5
 
 def tabla(actual):
+    if actual != 0:
+        actual =  actual*5 - 1
+
     sql_elementos = '''
                     SELECT id, descripcion, espacio, kilos, origen, destino, email_encargador, celular_encargador 
                     FROM encargo 
@@ -146,6 +152,8 @@ head = '''
             <tbody>
             '''
 
+pag_v = pag+1
+
 body = '''
             </tbody>
           </table>
@@ -171,8 +179,8 @@ body = '''
     </div>
   </body>
 </html>
-'''.format(pag-1, pag, pag+1)
+'''.format(pag-1, pag_v, pag+1)
 
 print(head)
-tabla(pag*4)
+tabla(pag)
 print(body)

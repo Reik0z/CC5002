@@ -64,37 +64,31 @@ else:
     if not (re.match(patron_email, correo)):
         errores.append('<p>Error, formato del email.</p>')
 
-if 'celular' not in form:
-    telefono = ''
-else:
-    telefono = form.getvalue('celular')
-    patron_numero = "^\\+?\d{7,15}$"
-    if not (re.match(patron_numero, telefono)):
-        errores.append('<p>Error, formato del numero de telefono.</p>')
-
 # Revisamos que sean fechas distintas
 if 'fecha-ida' not in form:
     errores.append('<p> Error, seleccione una fecha de ida valida <p>')
 else:
 	fechaIda = form.getvalue('fecha-ida')
 
-patron_fecha = "/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/"
-# if errores == [] 
-#   if not (re.match(patron_fecha, fechaIda)):
-#     errores.append('<p>Error, formato de fecha1 no valido.</p>')
-
+patron_fecha = "^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$"
 if 'fecha-regreso' not in form:
     errores.append('<p> Error, seleccione una fecha de regreso valida </p>')
 else:
 	fechaRegreso = form.getvalue('fecha-regreso')
 
-# if errores == []:
-#   if not (re.match(patron_fecha, fechaRegreso)):
-#         errores.append('<p>Error, formato de fecha2 no valido.</p>')
-
 if errores == []:
+  if not (re.match(patron_fecha,fechaIda)):
+      errores.append('<p> Error, formato de fecha incorrecto </p>')
+  if not (re.match(patron_fecha,fechaRegreso)):
+      errores.append('<p> Error, formato de fecha incorrecto </p>')
   if fechaIda >= fechaRegreso: # ordenar si es que no existe
       errores.append('<p>Error, fecha de ida no puede ser mayor o igual que la fecha de regreso <p>')
+
+telefono = form.getvalue('celular')
+if telefono != '':
+    patron_celular = "^\\+?\d{7,15}$"
+    if not re.match(patron_celular, telefono):
+        errores.append('<p> Error, en el formato del telefono </p>'.format(telefono))
 
 
 head = """
@@ -103,7 +97,9 @@ head = """
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agregar Viaje</title>
+    <title>Tarea 1</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
     <!-- CSS bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
@@ -113,10 +109,83 @@ head = """
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-    <link
-      href="../style/bootstrap.css"
-      rel="stylesheet"
-    />
+    <style>
+      .bd-placeholder-/img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-/img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+        color: #fff;
+        border-radius: .75rem;
+      }
+
+      .icon-link {
+        display: inline-flex;
+        align-items: center;
+      }
+      .icon-link > .bi {
+        margin-top: .125rem;
+        margin-left: .125rem;
+        transition: transform .25s ease-in-out;
+        fill: currentColor;
+      }
+      .icon-link:hover > .bi {
+        transform: translate(.25rem);
+      }
+
+      .icon-square {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        border-radius: .75rem;
+      }
+
+      .rounded-4 { border-radius: .5rem; }
+      .rounded-5 { border-radius: 1rem; }
+
+      .text-shadow-1 { text-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25); }
+      .text-shadow-2 { text-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25); }
+      .text-shadow-3 { text-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .25); }
+
+      .card-cover {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+      }
+
+    </style>
 
   </head>
 """
