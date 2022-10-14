@@ -24,10 +24,10 @@ if pag < 0:
 if total/((pag+1)*5) >= 1:
     total = 5
 else:
-    total = total%5
-
-if pag <= 0:
-    pag = 0
+    if total%5 == 0:
+        total = 0
+    else:
+        total = total%5
 
 def tabla(actual):
     if actual <= 0:
@@ -47,7 +47,7 @@ def tabla(actual):
         datos = datos_total[i]
 
         encargo_id = datos[0]
-        foto = db.get_data('ruta_archivo', 'foto', 'encargo_id', encargo_id)[i]
+        foto = db.get_data('ruta_archivo', 'foto', 'encargo_id', encargo_id)[0]
         origen = db.get_data('nombre', 'ciudad', 'id', datos[4])
         destino = db.get_data('nombre', 'ciudad', 'id', datos[5])
         espacio = db.get_data('valor', 'espacio_encargo', 'id', datos[2])
