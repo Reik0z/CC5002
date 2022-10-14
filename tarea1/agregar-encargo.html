@@ -248,15 +248,15 @@
       let numero = 1;
       let boton = document.getElementById('addfiles_butt');
       let caja_files = document.getElementById('cajaFiles');
-      const imp = '<input class="form-control" type="file" id="formFileMultiple" name="foto-encargo-'+(numero-1).toString()+'">';
       boton.addEventListener('click', function(){
-            if (numero < 3){
-              caja_files.innerHTML += imp;
-              numero++;
-            }
-            else{
-              alert("NO SE PUEDEN MÁS");
-            }
+        const imp = '<input class="form-control" type="file" id="formFileMultiple" name="foto-encargo-'+(numero).toString()+'">';
+        if (numero < 3){
+          caja_files.innerHTML += imp;
+          numero++;
+        }
+        else{
+          alert("NO SE PUEDEN MÁS");
+        }
       })
     </script>
     <script src="ext/addpais.js"></script>

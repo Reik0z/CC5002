@@ -102,8 +102,22 @@ destino = db.get_data('nombre', 'ciudad', 'id', dato_encargo[5])
 espacio = db.get_data('valor', 'espacio_encargo', 'id', dato_encargo[2])
 kilos = db.get_data('valor', 'kilos_encargo', 'id', dato_encargo[3])
 
-ruta_archivo = db.get_data('ruta_archivo', 'foto', 'encargo_id', id_encargo)
-id_foto = db.get_data('id', 'foto', 'encargo_id', id_encargo)
+sql_id = '''
+        SELECT (id)
+        FROM foto
+        WHERE encargo_id = '{}'
+        '''.format(id_encargo)
+db.cursor.execute(sql_id)
+foto_id = db.cursor.fetchall() # contiene los id de las 3 fotos
+
+sql_ruta = '''
+        SELECT (ruta_archivo)
+        FROM foto
+        WHERE encargo_id = '{}'
+        '''.format(id_encargo)
+db.cursor.execute(sql_ruta)
+foto_ruta = db.cursor.fetchall() # contiene las rutas de las 3 fotos
+
 
 body = '''
   <body class="bg-light">
@@ -129,30 +143,27 @@ body = '''
                 <div class="col-md-6 themed-grid-col">Destino</div>
                 <div class="col-md-4 themed-grid-col">{}</div>
               </div>
+      <div class="row mb-3 text-center">
+        <div class="col-md-6 themed-grid-col">Fotos</div>
         '''.format(id_encargo, origen, destino)
 
-foto_gen = '''
-<div id="carouselfotos" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">'''
+print(body)
 
-# <div class="carousel-item">
-#   <img class="d-block w-100" src="..." alt="Second slide">
-# </div>
-
-# foto_ = '''
-#               <div class="row mb-3 text-center">
-#                 <div class="col-md-6 themed-grid-col">Fotos</div>
-#                 <div class="col-md-4 themed-grid-col">
-#                   <img
-#                     src="../media/{}"
-#                     width="640"
-#                     height="480"
-#                     id="foto-{}"
-#                     alt="foto del encargo {}"
-#                     onclick="resizeimagen('foto-{}')"
-#                   />
-#                 </div>
-#               </div>'''
+for i in range(0,len(foto_id)):
+    foto = '''
+        <div class="col-md-4 themed-grid-col">
+          <img
+            src="../media/{}"
+            width="640"
+            height="480"
+            id="foto-{}"
+            alt="foto del encargo {}"
+            onclick="resizeimagen('foto-{}')"
+          />
+        </div>
+      </div>
+      '''.format(foto_ruta[i][0], foto_id[i][0], foto_id[i][0], foto_id[i][0])
+    print(foto)
 
 body_ext = '''  
           </div>
@@ -187,22 +198,6 @@ body_ext = '''
       </main>
 '''.format(espacio, kilos, dato_encargo[6], dato_encargo[1], tel)
 
-print(body)
-
-for i in range(0,len(ruta_archivo)):
-  print('''
-    <div class="carousel-item active">
-      <img 
-        class="d-block" 
-        src="../media/{}"
-        width="640"
-        height="480"
-        id="foto-{}"
-        alt="foto del encargo {}"
-        onclick="resizeimagen('foto-{}')"
-    </div>
-''').format(ruta_archivo[i], id_foto[i], id_foto[i], id_foto[i])
-
 print(body_ext)
 print('''
       <script>
@@ -228,3 +223,34 @@ print('''
   </body>
 </html>
 ''')
+
+      # <div class="carousel-item active">
+      #   <img 
+      #     class="d-block" 
+      #     src="../media/{}"
+      #     width="640"
+      #     height="480"
+      #     id="foto-{}"
+      #     alt="foto del encargo {}"
+      #     onclick="resizeimagen('foto-{}')"
+      # </div>
+
+
+# <div class="carousel-item">
+#   <img class="d-block w-100" src="..." alt="Second slide">
+# </div>
+
+# foto_ = '''
+#               <div class="row mb-3 text-center">
+#                 <div class="col-md-6 themed-grid-col">Fotos</div>
+#                 <div class="col-md-4 themed-grid-col">
+#                   <img
+#                     src="../media/{}"
+#                     width="640"
+#                     height="480"
+#                     id="foto-{}"
+#                     alt="foto del encargo {}"
+#                     onclick="resizeimagen('foto-{}')"
+#                   />
+#                 </div>
+#               </div>'''
