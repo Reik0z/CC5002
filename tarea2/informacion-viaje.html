@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ver Encargos</title>
+
+    <link
+      href="style/bootstrap.css"
+      rel="stylesheet"
+    />
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+    <script
+      src="style/bootstrap.js"
+    ></script>
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <main>
+        <h2 class="mt-4">Información Encargos</h2>
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          onclick="location.href='ver-viajes.html'"
+        >
+          Ver viajes
+        </button>
+        <!-- 1-->
+        <div class="p-4" id="viaje-1">
+          <div class="border border-dark">
+            <div class="p-2">
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Origen</div>
+                <div class="col-md-4 themed-grid-col">Madagascar</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Destino</div>
+                <div class="col-md-4 themed-grid-col">Chile</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha ida</div>
+                <div class="col-md-4 themed-grid-col">2020-03-06</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha llegada</div>
+                <div class="col-md-4 themed-grid-col">2020-03-09</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Espacio</div>
+                <div class="col-md-4 themed-grid-col">20x20x20</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Kilos</div>
+                <div class="col-md-4 themed-grid-col">2kg</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Email</div>
+                <div class="col-md-4 themed-grid-col">alexelleon@zoo.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 2-->
+        <div class="p-4" id="viaje-2">
+          <div class="border border-dark">
+            <div class="p-2">
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Origen</div>
+                <div class="col-md-4 themed-grid-col">Finalandia</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Destino</div>
+                <div class="col-md-4 themed-grid-col">Chile</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha ida</div>
+                <div class="col-md-4 themed-grid-col">2021-12-24</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha llegada</div>
+                <div class="col-md-4 themed-grid-col">2021-12-25</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Espacio</div>
+                <div class="col-md-4 themed-grid-col">10x10x10</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Kilos</div>
+                <div class="col-md-4 themed-grid-col">1kg</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Email</div>
+                <div class="col-md-4 themed-grid-col">
+                  viejopascuero@polonorte.com
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 3-->
+        <div class="p-4" id="viaje-3">
+          <div class="border border-dark">
+            <div class="p-2">
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Origen</div>
+                <div class="col-md-4 themed-grid-col">China</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Destino</div>
+                <div class="col-md-4 themed-grid-col">Tailandia</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha ida</div>
+                <div class="col-md-4 themed-grid-col">2021-01-10</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha llegada</div>
+                <div class="col-md-4 themed-grid-col">2021-01-12</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Espacio</div>
+                <div class="col-md-4 themed-grid-col">30x30x30</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Kilos</div>
+                <div class="col-md-4 themed-grid-col">200gr</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Email</div>
+                <div class="col-md-4 themed-grid-col">
+                  personaviajante@wuhan.com
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 4-->
+        <div class="p-4" id="viaje-4">
+          <div class="border border-dark">
+            <div class="p-2">
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Origen</div>
+                <div class="col-md-4 themed-grid-col">Angola</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Destino</div>
+                <div class="col-md-4 themed-grid-col">Brazil</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha ida</div>
+                <div class="col-md-4 themed-grid-col">2022-02-14</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha llegada</div>
+                <div class="col-md-4 themed-grid-col">2021-08-17</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Espacio</div>
+                <div class="col-md-4 themed-grid-col">20x20x20</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Kilos</div>
+                <div class="col-md-4 themed-grid-col">2kg</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Email</div>
+                <div class="col-md-4 themed-grid-col">luna.rojas@gmail.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 5-->
+        <div class="p-4" id="viaje-5">
+          <div class="border border-dark">
+            <div class="p-2">
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Origen</div>
+                <div class="col-md-4 themed-grid-col">Inglaterra</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Destino</div>
+                <div class="col-md-4 themed-grid-col">Ecuador</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha ida</div>
+                <div class="col-md-4 themed-grid-col">2015-06-20</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Fecha llegada</div>
+                <div class="col-md-4 themed-grid-col">2015-07-10</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Espacio</div>
+                <div class="col-md-4 themed-grid-col">30x30x30</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Kilos</div>
+                <div class="col-md-4 themed-grid-col">800gr</div>
+              </div>
+
+              <div class="row mb-3 text-center">
+                <div class="col-md-6 themed-grid-col">Email</div>
+                <div class="col-md-4 themed-grid-col">
+                  c.ronaldosiu@gmail.com
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">CC5002</p>
+      </footer>
+    </div>
+  </body>
+</html>

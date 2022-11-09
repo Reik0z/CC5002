@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agregar Viaje</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <link
+      href="style/bootstrap.css"
+      rel="stylesheet"
+    />
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <main>
+        <div class="py-5 text-center">
+          <h2>Agregar Viaje</h2>
+        </div>
+        <div>
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Datos solicitados</h4>
+            <form
+              id="formulario"
+              action="cgi-bin/Grabar-viaje.py"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="row g-3">
+                <div class="col-md-5">
+                  <label for="pais" class="form-label">País de Origen</label>
+                  <select
+                    class="form-select"
+                    id="pais"
+                    name="pais-origen"
+                  >
+                    <option value="">Seleccionar...</option>
+                  </select>
+                </div>
+
+                <div class="col-md-5">
+                  <label for="ciudad" class="form-label"
+                    >Ciudad de Origen</label
+                  >
+                  <select
+                    class="form-select"
+                    id="ciudad"
+                    name="ciudad-origen"
+                  >
+                    <option value="">Seleccionar...</option>
+                  </select>
+                </div>
+
+                <div class="col-md-5">
+                  <label for="paisdestino" class="form-label"
+                    >País de Destino</label
+                  >
+                  <select
+                    class="form-select"
+                    id="paisdestino"
+                    name="pais-destino"
+                  >
+                    <option value="">Seleccionar...</option>
+                  </select>
+                </div>
+
+                <div class="col-md-5">
+                  <label for="ciudaddestino" class="form-label"
+                    >Ciudad de Destino</label
+                  >
+                  <select
+                    class="form-select"
+                    id="ciudaddestino"
+                    name="ciudad-destino"
+                  >
+                    <option value="">Seleccionar...</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-10">
+                  <label for="fechaida" class="form-label">Fecha Ida</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fechaida"
+                    name="fecha-ida"
+                    placeholder="año-mes-dia"
+                  />
+                  <div class="invalid-feedback">
+                    Es necesario ingresar una fecha valida.
+                  </div>
+                </div>
+
+                <div class="col-sm-10">
+                  <label for="fecharegreso" class="form-label"
+                    >Fecha Regreso</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fecharegreso"
+                    name="fecha-regreso"
+                    placeholder="año-mes-dia"
+                  />
+                  <div class="invalid-feedback">
+                    Es necesario ingresar una fecha valida.
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <label for="espaciodisp" class="form-label"
+                    >Espacio Disponible</label
+                  >
+                  <select
+                    class="form-select"
+                    id="espaciodisp"
+                    name="espacio-disponible"
+                  >
+                    <option value="">Seleccionar...</option>
+                    <option value="1">10x10x10</option>
+                    <option value="2">20x20x20</option>
+                    <option value="3">30x30x30</option>
+                  </select>
+                </div>
+
+                <div class="col-md-5">
+                  <label for="kilosdisp" class="form-label"
+                    >Kilos Disponibles</label
+                  >
+                  <select
+                    class="form-select"
+                    id="kilosdisp"
+                    name="kilos-disponibles"
+                  >
+                    <option value="">Seleccionar...</option>
+                    <option value="1">200 gr</option>
+                    <option value="2">500 gr</option>
+                    <option value="3">800 gr</option>
+                    <option value="4">1 kg</option>
+                    <option value="5">1.5 kg</option>
+                    <option value="6">2 kg</option>
+                  </select>
+                </div>
+
+                <div class="col-10">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="nombre@ejemplo.com"
+                  />
+                  <div class="invalid-feedback">Ingrese un email valido.</div>
+                </div>
+
+                <div class="col-sm-10">
+                  <label for="celular" class="form-label"
+                    >Número de Celular (opcional)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="celular"
+                    name="celular"
+                    placeholder="+56..."
+                  />
+                  <div class="invalid-feedback">
+                    Es necesario ingresar un número de celular valido.
+                  </div>
+                </div>
+
+                <div class="d-grid col-10">
+                  <button class="btn btn-outline-primary btn-lg" type="submit">
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">CC5002</p>
+      </footer>
+    </div>
+    <script src="ext/addpais.js"></script>
+    <!-- <script src="validadores/form-validation-aviaje.js"></script> -->
+  </body>
+</html>
