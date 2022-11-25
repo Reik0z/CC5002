@@ -1,0 +1,20 @@
+¿Qué es una API?
+Una api es una abreviatura de Appliacation Programming Interfaces, es decir 
+un conjunto de definiciones y protocolos utilizados para desarrollar e integrar 
+software entre 2 aplicaciones. API permite establecer una comunicación formal 
+entre 2 aplicaciones.
+
+Métodos HTTP: GET, POST, PUT, DELETE
+	- GET: Usado para recuperar información del servidor usando URI.
+	- POST: Usado para enviar datos al servidor.
+	- PUT: Usado para reemplazar una representación de un elemento o crearlo.
+	- DELETE: Usado para remover todas las representaciones actuales del recurso
+		dado por el URI.
+
+¿Qué es REST?
+Una API de REST, o API de RESTful, es una interfaz de programación de aplicaciones 
+(API o API web) que se ajusta a los límites de la arquitectura REST y permite la 
+interacción con los servicios web de RESTful.
+REST no es un protocolo ni un estándar, sino más bien un conjunto de límites de arquitectura.
+REST es cualquier interfaz entre sistemas que use HTTP para obtener datos o generar 
+operaciones sobre esos datos en todos los formatos posibles, como XML y JSON.

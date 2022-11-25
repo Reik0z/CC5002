@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Encargo</title>
+
+    <!-- CSS bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- JS bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    
+</head>
+
+<body>
+
+  <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Auxiliar 7 - AJAX</h1>
+        <p class="lead ">Manejo y uso de la información en una base de datos.</p>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">CC5002</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="../cgi-bin/form.py">Hacer Pedido</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../cgi-bin/list.py">Ver Pedidos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../templates/agregar-viaje.html">Agregar Viaje</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </nav>
+      </div>
+      
+    </section>
+    
+    <!-- CONTENIDO INGRESADO POR USTED, USAREMOS EL FORMULARIO -->
+    <div class="container">
+      
+        <div class="row">
+          <div class="col-md-4 order-md-2 mb-4 errores">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted">Acá van los mensajes del backend.</span>
+            </h4>
+            <ul class="list-group mb-3 lista-errores">
+              
+            </ul>
+          </div>
+
+          <div class="col-md-8 order-md-1">
+            
+            <h4 class="mb-3">Agregar Viaje</h4>
+            <form class="needs-validation">
+              <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label for="country">Pais Origen</label>
+                    <select class="custom-select d-block w-100" id="pais-origen" name="pais-origen">
+                      <option value="">Choose...</option>
+
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="state">Ciudad Origen</label>
+                    <select class="custom-select d-block w-100" id="ciudad-origen" name="ciudad-origen">
+                      <option value="">Choose...</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="country">Pais Destino</label>
+                    <select class="custom-select d-block w-100" id="pais-destino" name="pais-destino">
+                      <option value="">Choose...</option>
+
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="state">Ciudad Destino</label>
+                    <select class="custom-select d-block w-100" id="ciudad-destino" name="ciudad-destino">
+                      <option value="">Choose...</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3 divFecha">
+                  <label for="firstName">Fecha Ida</label>
+                  <input type="text" class="form-control" name="fecha-ida" id="fecha-ida" placeholder="" value="">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="lastName">Fecha Regreso</label>
+                  <input type="text" class="form-control" id="fecha-regreso" name="fecha-regreso" placeholder="" value="">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="country">Espacio disponible</label>
+                    <select class="custom-select d-block w-100" id="espacio">
+                    <option value="">Choose...</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="state">Kilos disponible</label>
+                    <select class="custom-select d-block w-100" id="kilos" >
+                      <option value="">Choose...</option>
+                    </select>
+                </div>
+              </div>
+
+            
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="cc-name">Email</label>
+                  <input type="text" class="form-control" id="email" placeholder="">
+                  <small class="text-muted">Ejemplo: correo@dominio.cl</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="cc-number">Teléfono</label>
+                  <input type="text" class="form-control" id="telefono" placeholder="">
+                  <small class="text-muted">Ejemplo: +56962589742</small>
+                </div>
+              </div>
+              <hr class="mb-4">
+              <button class="btn btn-primary btn-lg btn-block envio" type="button">Enviar</button>
+            </form>
+          </div>
+        </div>
+
+    <script>
+
+        $.get('../cgi-bin/cargar_info.py?info=pais').done(function(response){
+            let pais_origen = $('#pais-origen');
+            let pais_destino = $('#pais-destino');
+
+            $.each(response, function(key,val){
+                $option = $('<option>').val(val[0]).text(val[1]);
+                $option1 = $('<option>').val(val[0]).text(val[1]);
+                pais_origen.append($option)
+                pais_destino.append($option1)
+            });
+        });
+
+        $('#pais-origen').on('change', function(){
+            let pais_origen = $('#pais-origen').val();
+            let ciudad_origen = $('#ciudad-origen');
+            $.ajax({
+                data: {
+                    'info':'ciudad',
+                    'pais_id':pais_origen
+                },
+                url: '../cgi-bin/cargar_info.py',
+                method:'get'
+            }).done(function(response){
+                $option = $('<option>').val(response[0][0]).text(response[0][1]);
+                ciudad_origen.empty()
+                ciudad_origen.append($option)
+            });
+        });
+
+        $('#pais-destino').on('change', function(){
+            let pais_destino = $('#pais-destino').val();
+            let ciudad_destino = $('#ciudad-destino');
+            $.ajax({
+                data: {
+                    'info':'ciudad',
+                    'pais_id':pais_destino
+                },
+                url: '../cgi-bin/cargar_info.py',
+                method:'get'
+            }).done(function(response){
+                $option = $('<option>').val(response[0][0]).text(response[0][1]);
+                ciudad_destino.empty()
+                ciudad_destino.append($option)
+            });
+        });
+
+
+        $.get('../cgi-bin/cargar_info.py?info=kilos').done(function(response){
+            let kilos = $('#kilos');
+            $.each(response, function(key,val){
+                $option = $('<option>').val(val[0]).text(val[1]);
+                kilos.append($option)
+            });
+        });
+
+        
+        $.get('../cgi-bin/cargar_info.py?info=encargos').done(function(response){
+          let espacio = $('#espacio');
+          $.each(response, function(key,val){
+            $option = $('<option>').val(val[0]).text(val[1]);
+            espacio.append($option)
+          })
+        });;
+
+        function agregaEncargo(){
+          let ciudad_origen = $('#ciudad-origen').val();
+          let ciudad_destino = $('#ciudad-destino').val();
+          let fecha_ida = $('#fecha-ida').val();
+          let fecha_regreso = $('#fecha-regreso').val();
+          let espacio = $('#espacio').val();
+          let kilos = $('#kilos').val();
+          let email = $('#email').val();
+          let telefono = $('#telefono').val();
+
+          $.ajax({
+            method: 'get',
+            url: '../cgi-bin/save_viaje.py',
+            data:{
+              ciudad_origen: ciudad_origen,
+              ciudad_destino: ciudad_destino,
+              fecha_ida: fecha_ida,
+              fecha_regreso: fecha_regreso,
+              espacio: espacio,
+              kilos: kilos,
+              email: email,
+              telefono: telefono
+            }
+          }).done(function(response){
+            var lista_errores = $('.lista-errores');
+            lista_errores.empty();
+
+            $.each(response, function(key,val){
+
+              var lista = $('<li>', {class: 'list-group-item d-flex justify-content-between lh-condensed'}).append($('<h6>', {class:'my-0'}).text(key)).append($('<small>',{class:'text-muted'}).text(val))
+              lista_errores.append(lista);
+
+            })
+
+            // $('.lista-errores').append(error_json)
+          }).fail(function(jqXHR){
+            var lista_errores = $('.lista-errores');
+            lista_errores.empty();
+
+            console.log(jqXHR);
+            console.log(jqXHR.responseText);
+            var lista = $('<li>', {class: 'list-group-item d-flex justify-content-between lh-condensed'}).append($('<h6>', {class:'my-0'}).text('ERROR')).append($('<small>',{class:'text-muted'}).text(jqXHR.responseText))
+            lista_errores.append(lista);
+          })
+          
+        }
+
+        $('.envio').click(function(){
+          agregaEncargo();
+        })
+    </script>
+ 
+      <!-- End of .container -->
+</body>
+</html>
+
+ 
